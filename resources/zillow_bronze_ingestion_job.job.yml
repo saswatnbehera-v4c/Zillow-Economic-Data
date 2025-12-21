@@ -19,7 +19,7 @@ resources:
             base_parameters:
               file_format: .csv
               table_name: county_metrics
-            notebook_path: ..\src\test_bronze_ingestion.ipynb
+            notebook_path: ../src/pipelines/01_bronze/ingest_csv_bulk.ipynb
             source: WORKSPACE
           run_if: ALL_SUCCESS
           timeout_seconds: 0

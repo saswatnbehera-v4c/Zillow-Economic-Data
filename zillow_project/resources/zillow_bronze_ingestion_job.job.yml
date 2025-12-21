@@ -1,0 +1,31 @@
+resources:
+  jobs:
+    zillow_bronze_ingestion_job:
+      name: Zillow_Bronze_Ingestion_Job
+      tasks:
+        - task_key: Ingest_CSV
+          email_notifications: {}
+          notebook_task:
+            notebook_path: ..\src\pipelines\01_bronze\ingest_csv_bulk.ipynb
+            source: WORKSPACE
+          run_if: ALL_SUCCESS
+          timeout_seconds: 0
+          webhook_notifications: {}
+        - task_key: Unit_Tests
+          depends_on:
+            - task_key: Ingest_CSV
+          email_notifications: {}
+          notebook_task:
+            notebook_path: ..\src\tests\test_bronze_ingestion.ipynb
+            source: WORKSPACE
+          run_if: ALL_SUCCESS
+          timeout_seconds: 0
+          webhook_notifications: {}
+      email_notifications:
+        no_alert_for_skipped_runs: false
+      max_concurrent_runs: 1
+      performance_target: PERFORMANCE_OPTIMIZED
+      queue:
+        enabled: true
+      timeout_seconds: 0
+      webhook_notifications: {}

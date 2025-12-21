@@ -1,0 +1,16 @@
+resources:
+  pipelines:
+    zillow_bronze_dlt_csv_ingestion:
+      name: Zillow_Bronze_DLT_CSV_Ingestion
+      configuration:
+        "pipeline.landing_path": "/Volumes/zillow/bronze/files"
+      libraries:
+        - glob:
+            include: ../src/pipelines/01_bronze/ingest_csv_dlt.py
+      catalog: ${var.catalog}
+      channel: CURRENT
+      continuous: false
+      photon: true
+      root_path: ../src
+      schema: ${var.schema_bronze}
+      serverless: true

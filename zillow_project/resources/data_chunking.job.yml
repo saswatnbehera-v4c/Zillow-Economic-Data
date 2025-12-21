@@ -1,0 +1,38 @@
+resources:
+  jobs:
+    data_chunking:
+      name: Data Chunking
+      tasks:
+        - task_key: Data_Chunking
+          email_notifications: {}
+          notebook_task:
+            base_parameters:
+              delimiter: ""
+              file_name: Neighborhood_time_series
+              has_header: ""
+              output_dir: ""
+              partition_percentage: '[50,20,15,15]'
+            notebook_path: ..\src\pipelines\00_setup\chunking.ipynb
+            source: WORKSPACE
+          run_if: ALL_SUCCESS
+          timeout_seconds: 0
+          webhook_notifications: {}
+      parameters:
+        - name: delimiter
+          default: ','
+        - name: file_name
+          default: County_time_series
+        - name: has_header
+          default: True
+        - name: output_dir
+          default: ""
+        - name: partition_percentage
+          default: '[50,20,15,15]'
+      email_notifications:
+        no_alert_for_skipped_runs: false
+      max_concurrent_runs: 1
+      performance_target: PERFORMANCE_OPTIMIZED
+      queue:
+        enabled: true
+      timeout_seconds: 0
+      webhook_notifications: {}

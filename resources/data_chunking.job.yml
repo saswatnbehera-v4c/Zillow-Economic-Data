@@ -12,7 +12,7 @@ resources:
               has_header: ""
               output_dir: ""
               partition_percentage: '[50,20,15,15]'
-            notebook_path: ..\src\pipelines\00_setup\chunking.ipynb
+            notebook_path: ../src/pipelines/00_setup/chunking.ipynb
             source: WORKSPACE
           run_if: ALL_SUCCESS
           timeout_seconds: 0

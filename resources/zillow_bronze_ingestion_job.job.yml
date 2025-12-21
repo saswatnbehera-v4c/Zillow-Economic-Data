@@ -6,7 +6,7 @@ resources:
         - task_key: Ingest_CSV
           email_notifications: {}
           notebook_task:
-            notebook_path: ..\src\ingest_csv_bulk.ipynb
+            notebook_path: ../src/pipelines/01_bronze/ingest_csv_bulk.ipynb
             source: WORKSPACE
           run_if: ALL_SUCCESS
           timeout_seconds: 0
@@ -19,7 +19,7 @@ resources:
             base_parameters:
               file_format: .csv
               table_name: county_metrics
-            notebook_path: ../src/pipelines/01_bronze/ingest_csv_bulk.ipynb
+            notebook_path: ../src/tests/test_bronze_ingestion.ipynb
             source: WORKSPACE
           run_if: ALL_SUCCESS
           timeout_seconds: 0

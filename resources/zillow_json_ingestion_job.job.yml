@@ -1,0 +1,34 @@
+resources:
+  jobs:
+    zillow_json_ingestion_job:
+      name: Zillow_JSON_Ingestion_Job
+      tasks:
+        - task_key: Json_Ingestion
+          email_notifications: {}
+          notebook_task:
+            notebook_path: ../src/pipelines/01_bronze/ingest_json_data.ipynb
+            source: WORKSPACE
+          run_if: ALL_SUCCESS
+          timeout_seconds: 0
+          webhook_notifications: {}
+        - task_key: Unit_Test
+          depends_on:
+            - task_key: Json_Ingestion
+          email_notifications: {}
+          notebook_task:
+            base_parameters:
+              file_format: .json
+              table_name: county_metrics_json
+            notebook_path: ../src/tests/test_bronze_ingestion.ipynb
+            source: WORKSPACE
+          run_if: ALL_SUCCESS
+          timeout_seconds: 0
+          webhook_notifications: {}
+      email_notifications:
+        no_alert_for_skipped_runs: false
+      max_concurrent_runs: 1
+      performance_target: PERFORMANCE_OPTIMIZED
+      queue:
+        enabled: true
+      timeout_seconds: 0
+      webhook_notifications: {}

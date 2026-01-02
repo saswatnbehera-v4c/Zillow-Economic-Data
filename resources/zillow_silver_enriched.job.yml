@@ -6,7 +6,7 @@ resources:
         - task_key: county_metrics_consolidation
           email_notifications: {}
           notebook_task:
-            notebook_path: ..\src\pipelines\02_silver\county_metrics_consolidation.ipynb
+            notebook_path: ../src/pipelines/02_silver/county_metrics_consolidation.ipynb
             source: WORKSPACE
           run_if: ALL_SUCCESS
           timeout_seconds: 0
@@ -16,7 +16,7 @@ resources:
             - task_key: county_metrics_consolidation
           email_notifications: {}
           notebook_task:
-            notebook_path: ..\src\pipelines\02_silver\enrich_county_metrics.ipynb
+            notebook_path: ../src/pipelines/02_silver/enrich_county_metrics.ipynb
             source: WORKSPACE
           run_if: ALL_SUCCESS
           timeout_seconds: 0
@@ -28,7 +28,7 @@ resources:
           notebook_task:
             base_parameters:
               table_name: county_crosswalk_metrics
-            notebook_path: ..\src\tests\test_silver_tables.ipynb
+            notebook_path: ../src/tests/test_silver_tables.ipynb
             source: WORKSPACE
           run_if: ALL_SUCCESS
           timeout_seconds: 0
@@ -40,7 +40,7 @@ resources:
           notebook_task:
             base_parameters:
               table_name: county_metrics
-            notebook_path: ..\src\tests\test_silver_tables.ipynb
+            notebook_path: ../src/tests/test_silver_tables.ipynb
             source: WORKSPACE
           run_if: ALL_SUCCESS
           timeout_seconds: 0

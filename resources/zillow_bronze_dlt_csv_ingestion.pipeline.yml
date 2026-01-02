@@ -13,7 +13,7 @@ resources:
         kind: BUNDLE
         metadata_file_path: /Workspace/Users/saswat.n.behera@v4c.ai/.bundle/zillow_project/dev/state/metadata.json
       photon: true
-      root_path: ../src
+      root_path: ../src/pipelines/01_bronze/
       schema: bronze
       serverless: true
       tags:

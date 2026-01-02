@@ -1,0 +1,54 @@
+resources:
+  jobs:
+    zillow_silver_enriched:
+      name: Zillow_Silver_Enriched
+      tasks:
+        - task_key: county_metrics_consolidation
+          email_notifications: {}
+          notebook_task:
+            notebook_path: ..\src\pipelines\02_silver\county_metrics_consolidation.ipynb
+            source: WORKSPACE
+          run_if: ALL_SUCCESS
+          timeout_seconds: 0
+          webhook_notifications: {}
+        - task_key: county_metrics_enhrichment
+          depends_on:
+            - task_key: county_metrics_consolidation
+          email_notifications: {}
+          notebook_task:
+            notebook_path: ..\src\pipelines\02_silver\enrich_county_metrics.ipynb
+            source: WORKSPACE
+          run_if: ALL_SUCCESS
+          timeout_seconds: 0
+          webhook_notifications: {}
+        - task_key: test_enriched_metrics
+          depends_on:
+            - task_key: county_metrics_enhrichment
+          email_notifications: {}
+          notebook_task:
+            base_parameters:
+              table_name: county_crosswalk_metrics
+            notebook_path: ..\src\tests\test_silver_tables.ipynb
+            source: WORKSPACE
+          run_if: ALL_SUCCESS
+          timeout_seconds: 0
+          webhook_notifications: {}
+        - task_key: test_county_metrics_consolidation
+          depends_on:
+            - task_key: county_metrics_consolidation
+          email_notifications: {}
+          notebook_task:
+            base_parameters:
+              table_name: county_metrics
+            notebook_path: ..\src\tests\test_silver_tables.ipynb
+            source: WORKSPACE
+          run_if: ALL_SUCCESS
+          timeout_seconds: 0
+      email_notifications:
+        no_alert_for_skipped_runs: false
+      max_concurrent_runs: 1
+      performance_target: PERFORMANCE_OPTIMIZED
+      queue:
+        enabled: true
+      timeout_seconds: 0
+      webhook_notifications: {}

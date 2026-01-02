@@ -1,16 +1,20 @@
 resources:
   pipelines:
     zillow_bronze_dlt_csv_ingestion:
-      name: Zillow_Bronze_DLT_CSV_Ingestion
+      name: 'Zillow_Bronze_DLT_CSV_Ingestion'
       configuration:
         "pipeline.landing_path": "/Volumes/zillow/bronze/files"
       libraries:
         - glob:
             include: ../src/pipelines/01_bronze/ingest_csv_dlt.py
-      catalog: ${var.catalog}
+      catalog: zillow
       channel: CURRENT
-      continuous: false
+      deployment:
+        kind: BUNDLE
+        metadata_file_path: /Workspace/Users/saswat.n.behera@v4c.ai/.bundle/zillow_project/dev/state/metadata.json
       photon: true
       root_path: ../src
-      schema: ${var.schema_bronze}
+      schema: bronze
       serverless: true
+      tags:
+        dev: saswat_n_behera

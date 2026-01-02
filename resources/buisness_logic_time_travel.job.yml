@@ -1,0 +1,30 @@
+resources:
+  jobs:
+    buisness_logic_time_travel:
+      name: Buisness_Logic_Time_Travel
+      tasks:
+        - task_key: apply_business_logic
+          email_notifications: {}
+          notebook_task:
+            notebook_path: ../src/pipelines/02_silver/apply_business_rules.ipynb
+            source: WORKSPACE
+          run_if: ALL_SUCCESS
+          timeout_seconds: 0
+          webhook_notifications: {}
+        - task_key: test_delta_features
+          depends_on:
+            - task_key: apply_business_logic
+          email_notifications: {}
+          notebook_task:
+            notebook_path: ../src/tests/test_delta_features.ipynb
+            source: WORKSPACE
+          run_if: ALL_SUCCESS
+          timeout_seconds: 0
+      email_notifications:
+        no_alert_for_skipped_runs: false
+      max_concurrent_runs: 1
+      performance_target: PERFORMANCE_OPTIMIZED
+      queue:
+        enabled: true
+      timeout_seconds: 0
+      webhook_notifications: {}

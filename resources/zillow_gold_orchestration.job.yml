@@ -1,0 +1,30 @@
+resources:
+  jobs:
+    zillow_gold_orchestration:
+      name: zillow_gold_orchestration
+      tasks:
+        - task_key: refresh_gold_dlt
+          email_notifications: {}
+          pipeline_task:
+            full_refresh: false
+            pipeline_id: 5ffbd588-fb3b-44b3-bc8b-9c6b90c441ad
+          run_if: ALL_SUCCESS
+          timeout_seconds: 0
+          webhook_notifications: {}
+        - task_key: validate_gold_data
+          depends_on:
+            - task_key: refresh_gold_dlt
+          email_notifications: {}
+          notebook_task:
+            notebook_path: ..\src\test_gold_layer.ipynb
+            source: WORKSPACE
+          run_if: ALL_SUCCESS
+          timeout_seconds: 0
+      email_notifications:
+        no_alert_for_skipped_runs: false
+      max_concurrent_runs: 1
+      performance_target: PERFORMANCE_OPTIMIZED
+      queue:
+        enabled: true
+      timeout_seconds: 0
+      webhook_notifications: {}

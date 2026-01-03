@@ -16,7 +16,7 @@ resources:
             - task_key: refresh_gold_dlt
           email_notifications: {}
           notebook_task:
-            notebook_path: ..\src\test_gold_layer.ipynb
+            notebook_path: ../src/tests/test_gold_layer.ipynb
             source: WORKSPACE
           run_if: ALL_SUCCESS
           timeout_seconds: 0

@@ -1,0 +1,14 @@
+resources:
+  pipelines:
+    zillow_gold_dlt:
+      name: zillow_gold_dlt
+      libraries:
+        - glob:
+            include: ../src/pipelines/03_gold/gold_dlt_pipeline.py
+      catalog: zillow
+      channel: CURRENT
+      continuous: false
+      photon: true
+      root_path: ../src/pipelines/03_gold
+      schema: gold
+      serverless: true

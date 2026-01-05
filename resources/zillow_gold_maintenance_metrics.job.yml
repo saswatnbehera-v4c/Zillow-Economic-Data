@@ -1,0 +1,40 @@
+resources:
+  jobs:
+    zillow_gold_maintenance_metrics:
+      name: Zillow_Gold_Maintenance_&_Metrics
+      tasks:
+        - task_key: Churn_Metric
+          email_notifications: {}
+          notebook_task:
+            notebook_path: ../src/pipelines/03_gold/gold_business_metrics.ipynb
+            source: WORKSPACE
+          run_if: ALL_SUCCESS
+          timeout_seconds: 0
+          webhook_notifications: {}
+        - task_key: Test_Performance_Benchmarks
+          depends_on:
+            - task_key: Churn_Metric
+          email_notifications: {}
+          notebook_task:
+            notebook_path: ../src/tests/test_performance_benchmarks.ipynb
+            source: WORKSPACE
+          run_if: ALL_SUCCESS
+          timeout_seconds: 0
+          webhook_notifications: {}
+        - task_key: Upsert_Incremental_Data
+          depends_on:
+            - task_key: Churn_Metric
+          email_notifications: {}
+          notebook_task:
+            notebook_path: ../src/pipelines/03_gold/upsert_late_data.ipynb
+            source: WORKSPACE
+          run_if: ALL_SUCCESS
+          timeout_seconds: 0
+      email_notifications:
+        no_alert_for_skipped_runs: false
+      max_concurrent_runs: 1
+      performance_target: PERFORMANCE_OPTIMIZED
+      queue:
+        enabled: true
+      timeout_seconds: 0
+      webhook_notifications: {}

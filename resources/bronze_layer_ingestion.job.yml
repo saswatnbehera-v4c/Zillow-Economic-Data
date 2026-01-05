@@ -1,0 +1,40 @@
+resources:
+  jobs:
+    bronze_layer_ingestion:
+      name: Bronze_Layer_Ingestion
+      tasks:
+        - task_key: CSV_Ingestion
+          email_notifications: {}
+          run_if: ALL_SUCCESS
+          run_job_task:
+            job_id: 374651642963325
+          timeout_seconds: 0
+          webhook_notifications: {}
+        - task_key: Json_Ingestion
+          email_notifications: {}
+          run_if: ALL_SUCCESS
+          run_job_task:
+            job_id: 406690343004356
+          timeout_seconds: 0
+          webhook_notifications: {}
+        - task_key: XML_Ingestion
+          email_notifications: {}
+          run_if: ALL_SUCCESS
+          run_job_task:
+            job_id: 998770627196535
+          timeout_seconds: 0
+          webhook_notifications: {}
+        - task_key: CSV_DLT_Ingestion
+          email_notifications: {}
+          run_if: ALL_SUCCESS
+          run_job_task:
+            job_id: 79416522917512
+          timeout_seconds: 0
+      email_notifications:
+        no_alert_for_skipped_runs: false
+      max_concurrent_runs: 1
+      performance_target: PERFORMANCE_OPTIMIZED
+      queue:
+        enabled: true
+      timeout_seconds: 0
+      webhook_notifications: {}

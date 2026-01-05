@@ -1,0 +1,28 @@
+resources:
+  jobs:
+    silver_layer_enrichment:
+      name: Silver_Layer_Enrichment
+      tasks:
+        - task_key: Silver_Layer_Transformation
+          email_notifications: {}
+          run_if: ALL_SUCCESS
+          run_job_task:
+            job_id: 1086061569120203
+          timeout_seconds: 0
+          webhook_notifications: {}
+        - task_key: Apply_Business_Rules
+          depends_on:
+            - task_key: Silver_Layer_Transformation
+          email_notifications: {}
+          run_if: ALL_SUCCESS
+          run_job_task:
+            job_id: 649539406768351
+          timeout_seconds: 0
+      email_notifications:
+        no_alert_for_skipped_runs: false
+      max_concurrent_runs: 1
+      performance_target: PERFORMANCE_OPTIMIZED
+      queue:
+        enabled: true
+      timeout_seconds: 0
+      webhook_notifications: {}

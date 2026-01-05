@@ -1,0 +1,29 @@
+resources:
+  jobs:
+    gold_downstream_tables:
+      name: Gold_Downstream_Tables
+      tasks:
+        - task_key: Fact_Dim_DLT
+          email_notifications: {}
+          run_if: ALL_SUCCESS
+          run_job_task:
+            job_id: 979837052032434
+          timeout_seconds: 0
+          webhook_notifications: {}
+        - task_key: Churn_Metric_Incremental_Load_and_Optimization
+          depends_on:
+            - task_key: Fact_Dim_DLT
+          email_notifications: {}
+          run_if: ALL_SUCCESS
+          run_job_task:
+            job_id: 523887810124085
+          timeout_seconds: 0
+          webhook_notifications: {}
+      email_notifications:
+        no_alert_for_skipped_runs: false
+      max_concurrent_runs: 1
+      performance_target: PERFORMANCE_OPTIMIZED
+      queue:
+        enabled: true
+      timeout_seconds: 0
+      webhook_notifications: {}

@@ -1,7 +1,7 @@
 resources:
   jobs:
-    zillow_bronze_ingestion_job:
-      name: Zillow_Bronze_Ingestion_Job
+    zillow_csv_ingestion_job:
+      name: Zillow_CSV_Ingestion_Job
       tasks:
         - task_key: Ingest_CSV
           email_notifications: {}
@@ -24,11 +24,18 @@ resources:
           run_if: ALL_SUCCESS
           timeout_seconds: 0
           webhook_notifications: {}
-      email_notifications:
-        no_alert_for_skipped_runs: false
+      deployment:
+        kind: BUNDLE
+        metadata_file_path: /Workspace/Users/saswat.n.behera@v4c.ai/.bundle/zillow_project/dev/state/metadata.json
+      edit_mode: EDITABLE
+      email_notifications: {}
       max_concurrent_runs: 1
       performance_target: PERFORMANCE_OPTIMIZED
       queue:
         enabled: true
+      run_as:
+        user_name: saswat.n.behera@v4c.ai
+      tags:
+        "dev": "saswat_n_behera"
       timeout_seconds: 0
       webhook_notifications: {}
